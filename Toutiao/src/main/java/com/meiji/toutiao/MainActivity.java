@@ -141,22 +141,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         BottomNavigationViewHelper.disableShiftMode(bottom_navigation);
         setSupportActionBar(toolbar);
         bottom_navigation.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.action_news:
-                    showFragment(FRAGMENT_NEWS);
-                    doubleClick(FRAGMENT_NEWS);
-                    break;
-                case R.id.action_photo:
-                    showFragment(FRAGMENT_PHOTO);
-                    doubleClick(FRAGMENT_PHOTO);
-                    break;
-                case R.id.action_video:
-                    showFragment(FRAGMENT_VIDEO);
-                    doubleClick(FRAGMENT_VIDEO);
-                    break;
-                case R.id.action_media:
-                    showFragment(FRAGMENT_MEDIA);
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_news) {
+                showFragment(FRAGMENT_NEWS);
+                doubleClick(FRAGMENT_NEWS);
+            } else if (itemId == R.id.action_photo) {
+                showFragment(FRAGMENT_PHOTO);
+                doubleClick(FRAGMENT_PHOTO);
+            } else if (itemId == R.id.action_video) {
+                showFragment(FRAGMENT_VIDEO);
+                doubleClick(FRAGMENT_VIDEO);
+            } else if (itemId == R.id.action_media) {
+                showFragment(FRAGMENT_MEDIA);
             }
             return true;
         });
@@ -286,37 +282,33 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-//            case R.id.nav_account:
-//                drawer_layout.closeDrawers();
-//                return false;
-
-            case R.id.nav_switch_night_mode:
-                int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if (mode == Configuration.UI_MODE_NIGHT_YES) {
-                    SettingUtil.getInstance().setIsNightMode(false);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                } else {
-                    SettingUtil.getInstance().setIsNightMode(true);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
-                recreate();
-                return false;
-
-            case R.id.nav_setting:
-                startActivity(new Intent(this, SettingActivity.class));
-                drawer_layout.closeDrawers();
-                return false;
-
-            case R.id.nav_share:
-                Intent shareIntent = new Intent()
-                        .setAction(Intent.ACTION_SEND)
-                        .setType("text/plain")
-                        .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_text) + getString(R.string.source_code_url));
-                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)));
-                drawer_layout.closeDrawers();
-                return false;
+        //            case R.id.nav_account:
+        //                drawer_layout.closeDrawers();
+        //                return false;
+        if (id == R.id.nav_switch_night_mode) {
+            int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (mode == Configuration.UI_MODE_NIGHT_YES) {
+                SettingUtil.getInstance().setIsNightMode(false);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else {
+                SettingUtil.getInstance().setIsNightMode(true);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+            recreate();
+            return false;
+        } else if (id == R.id.nav_setting) {
+            startActivity(new Intent(this, SettingActivity.class));
+            drawer_layout.closeDrawers();
+            return false;
+        } else if (id == R.id.nav_share) {
+            Intent shareIntent = new Intent()
+                    .setAction(Intent.ACTION_SEND)
+                    .setType("text/plain")
+                    .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_text) + getString(R.string.source_code_url));
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)));
+            drawer_layout.closeDrawers();
+            return false;
         }
         return false;
     }

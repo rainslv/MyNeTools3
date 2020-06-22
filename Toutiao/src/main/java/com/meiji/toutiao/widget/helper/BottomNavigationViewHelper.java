@@ -1,5 +1,7 @@
 package com.meiji.toutiao.widget.helper;
 
+import android.annotation.SuppressLint;
+import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -13,8 +15,13 @@ import java.lang.reflect.Field;
  */
 
 public class BottomNavigationViewHelper {
-
+    @SuppressLint("RestrictedApi")
     public static void disableShiftMode(BottomNavigationView view) {
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+        menuView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        menuView.buildMenuView();
+    }
+        /*
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
             Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
@@ -34,5 +41,5 @@ public class BottomNavigationViewHelper {
         } catch (IllegalAccessException e) {
             Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
-    }
+    }*/
 }

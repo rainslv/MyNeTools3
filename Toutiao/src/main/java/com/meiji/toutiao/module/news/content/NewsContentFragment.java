@@ -290,26 +290,16 @@ public class NewsContentFragment extends BaseFragment<INewsContent.Presenter> im
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-            case R.id.action_open_comment:
-                NewsCommentActivity.launch(bean.getGroup_id() + "", bean.getItem_id() + "");
-                break;
-
-            case R.id.action_share:
-                IntentAction.send(getActivity(), shareTitle + "\n" + shareUrl);
-                break;
-
-            case R.id.action_open_in_browser:
-                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(shareUrl)));
-                break;
-
-            case android.R.id.home:
-                getActivity().onBackPressed();
-                break;
-
-            case R.id.action_open_media_home:
-                MediaHomeActivity.launch(mediaId);
-                break;
+        if (id == R.id.action_open_comment) {
+            NewsCommentActivity.launch(bean.getGroup_id() + "", bean.getItem_id() + "");
+        } else if (id == R.id.action_share) {
+            IntentAction.send(getActivity(), shareTitle + "\n" + shareUrl);
+        } else if (id == R.id.action_open_in_browser) {
+            startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(shareUrl)));
+        } else if (id == android.R.id.home) {
+            getActivity().onBackPressed();
+        } else if (id == R.id.action_open_media_home) {
+            MediaHomeActivity.launch(mediaId);
         }
         return super.onOptionsItemSelected(item);
     }

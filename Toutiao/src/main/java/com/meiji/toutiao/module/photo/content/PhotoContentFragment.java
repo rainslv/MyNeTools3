@@ -214,22 +214,14 @@ public class PhotoContentFragment extends BaseFragment<IPhotoContent.Presenter> 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-            case R.id.action_open_comment:
-                NewsCommentActivity.launch(groupId, itemId);
-                break;
-
-            case R.id.action_open_media_home:
-                presenter.doGoMediaHome(mediaUrl);
-                break;
-
-            case R.id.action_open_in_browser:
-                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(shareUrl)));
-                break;
-
-            case R.id.action_share:
-                IntentAction.send(getActivity(), shareTitle + "\n" + shareUrl);
-                break;
+        if (id == R.id.action_open_comment) {
+            NewsCommentActivity.launch(groupId, itemId);
+        } else if (id == R.id.action_open_media_home) {
+            presenter.doGoMediaHome(mediaUrl);
+        } else if (id == R.id.action_open_in_browser) {
+            startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(shareUrl)));
+        } else if (id == R.id.action_share) {
+            IntentAction.send(getActivity(), shareTitle + "\n" + shareUrl);
         }
         return super.onOptionsItemSelected(item);
     }
